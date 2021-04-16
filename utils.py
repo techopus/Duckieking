@@ -49,7 +49,7 @@ def ht(img, threshold):
     except:
         return cimg, 0
 
-    return cimg, len(circles)
+    return cimg, len(circles[0,:])
 
 
 # cap = cv2.VideoCapture('output_1617983359.avi')
