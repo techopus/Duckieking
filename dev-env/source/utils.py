@@ -3,17 +3,16 @@ import cv2
 import numpy as np
 #output_1617983094.avi  output_1617983281.avi  output_1617983359.avi
 
-def ball_grid_detector(frame, circle_center):
+def ball_grid_detector(frame_shape, circle_center):
     '''
     takes a frame and a center of a circle and determines in which 
     position of the grid the object is
     '''
-    assert frame != None and circle_center != None, "[Error] recieved None.."
-    V = frame.shape[0]
-    H = frame.shape[1]
+    V = frame_shape[0]
+    H = frame_shape[1]
     ww = H//3 
     vv = V//3
-    x,y = circle_center
+    x,y = circle_center[0]
     if x < ww:
         if y < vv:
             return 1
@@ -43,27 +42,12 @@ def ht(img, threshold):
                             param1=threshold,param2=30,minRadius=10,maxRadius=80)
     try:
         circles = np.uint16(np.around(circles))
+        centers = []
         for i in circles[0,:]:
+            centers.append((i[0],i[1]))
             cv2.circle(cimg,(i[0],i[1]),i[2],(0,255,0),2)
             cv2.circle(cimg,(i[0],i[1]),2,(0,0,255),3)
     except:
-        return cimg, 0
+        return cimg, 0, []
 
-    return cimg, len(circles[0,:])
-
-
-# cap = cv2.VideoCapture('output_1617983359.avi')
-
-# while cap.isOpened():
-#     ret, frame = cap.read()
-#     if ret:
-#         frame = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
-#         frame = ht(frame)
-#         cv2.imshow('Tennis', frame)
-#         if cv2.waitKey(25) & 0xFF == ord('q'):
-#             break
-#     else:
-#         break
-
-# cap.release()
-# cv2.destroyAllWindows()
+    return cimg, len(circles[0,:]), centers
