@@ -26,6 +26,7 @@ class ImageSub():
             self.threshold = max(5, self.threshold - 2)
         elif circles > 1:
             self.threshold = min(500, self.threshold + 1)
+        rospy.loginfo(f'Circles: {circles} Threshold: {self.threshold}')
 
         cv2.imshow('Tennis Ball',res_from_ht)
         cv2.waitKey(1)
