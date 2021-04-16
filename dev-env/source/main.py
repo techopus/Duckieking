@@ -7,7 +7,7 @@ from sensor_msgs.msg import CompressedImage
 import matplotlib.pyplot as plt
 import cv2
 import time
-from utils import ht
+from utils import ht, ball_grid_detector
 
 class ImageSub():
     _r = None
@@ -21,12 +21,16 @@ class ImageSub():
         np_arr = np.fromstring(msg.data, np.uint8)
         image_np = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
         image_np = cv2.cvtColor(image_np, cv2.COLOR_BGR2GRAY)
-        res_from_ht, circles = ht(image_np, self.threshold)
+        res_from_ht, circles, centers = ht(image_np, self.threshold)
         if not circles:
             self.threshold = max(5, self.threshold - 2)
         elif circles > 1:
             self.threshold = min(500, self.threshold + 1)
-        print("Circles length : {} Threshold : {}".format(circles,self.threshold))
+        else:
+            pos = ball_grid_detector(image_np.shape, centers)
+            print("Grid idx pos: {}".format(pos))
+        
+       # print("Circles length : {} Threshold : {}".format(circles,self.threshold))
         cv2.imshow('Tennis Ball',res_from_ht)
         cv2.waitKey(1)
         
@@ -72,5 +76,3 @@ if __name__ == '__main__':
         # speed_publisher.StopRobot()
     except rospy.ROSInterruptException:
         pass
-
-
