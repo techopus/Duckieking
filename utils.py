@@ -36,20 +36,20 @@ def ball_grid_detector(frame, circle_center):
         else:
             return 9
 
-def ht(img):
+def ht(img, threshold):
     img = cv2.medianBlur(img,5)
     cimg = cv2.cvtColor(img,cv2.COLOR_GRAY2BGR)
     circles = cv2.HoughCircles(img,cv2.HOUGH_GRADIENT,1,100,
-                            param1=200,param2=30,minRadius=10,maxRadius=50)
+                            param1=threshold,param2=30,minRadius=10,maxRadius=80)
     try:
         circles = np.uint16(np.around(circles))
         for i in circles[0,:]:
             cv2.circle(cimg,(i[0],i[1]),i[2],(0,255,0),2)
             cv2.circle(cimg,(i[0],i[1]),2,(0,0,255),3)
     except:
-        pass
+        return cimg, 0
 
-    return cimg
+    return cimg, len(circles)
 
 
 # cap = cv2.VideoCapture('output_1617983359.avi')
