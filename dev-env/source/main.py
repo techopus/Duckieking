@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import cv2
 import time
 from utils import ht, ball_grid_detector
+grid = 1
 
 class ImageSub():
     _r = None
@@ -29,6 +30,7 @@ class ImageSub():
         else:
             pos = ball_grid_detector(image_np.shape, centers)
             print("Grid idx pos: {}".format(pos))
+            grid = (pos - 1) % 3
         
        # print("Circles length : {} Threshold : {}".format(circles,self.threshold))
         cv2.imshow('Tennis Ball',res_from_ht)
