@@ -5,4 +5,5 @@ ENV ROS_MASTER=duckiequeen
 ENV DUCKIEBOT_NAME=duckiequeen
 ENV ROS_MASTER_URI=http://duckiequeen.local:11311
 ENV HOSTNAME=duckiequeen
-CMD ["/bin/bash"]
+CMD ["chmod +x /source/main.py"]
+CMD ["/source/main.py"]
