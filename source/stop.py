@@ -97,7 +97,8 @@ if __name__ == '__main__':
     try:
         rospy.init_node('our_shitty_duckiequeen', anonymous=True)
         speed_p = Publisher()
-        bullshit = ImageSub()
+        speed_p.stop()
+        # bullshit = ImageSub()
        # speed_publisher = Publisher()
        # speed_publisher.MoveStraight(0.0,0.0)
 
