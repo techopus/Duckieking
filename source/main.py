@@ -1,5 +1,7 @@
 #! /usr/bin/env python
-
+"""
+Duckiequeen main file to follow a circle
+"""
 import rospy
 from duckietown_msgs.msg import WheelsCmdStamped
 import numpy as np
@@ -11,6 +13,9 @@ from utils import ht, ball_grid_detector
 grid = 1
 
 class ImageSub():
+    """
+    Subscriber class
+    """
     _r = None
     def __init__(self):
         self._s = rospy.Subscriber('/duckiequeen/camera_node/image/compressed', CompressedImage, self.callback)
@@ -19,6 +24,9 @@ class ImageSub():
         self.threshold = 200
 
     def callback(self, msg):
+        """
+        Take image, detect circles, follow
+        """
         np_arr = np.fromstring(msg.data, np.uint8)
         image_np = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
         image_np = cv2.cvtColor(image_np, cv2.COLOR_BGR2GRAY)
@@ -38,23 +46,35 @@ class ImageSub():
         
 
 class Publisher():
+    """
+    Publisher to duckie's wheels
+    """
     def __init__(self):
         self._p = rospy.Publisher('duckiequeen/wheels_driver_node/wheels_cmd', WheelsCmdStamped, queue_size=1)
         self._s = WheelsCmdStamped()
         rospy.loginfo('[INFO] Started Publisher Node ..')
 
     def MoveStraight(self, l_v, r_v):
+      """
+      Move by specified left and right velocities
+      """
       self._s.vel_left = l_v
       self._s.vel_right = r_v
       self.publish_once_in_cmd_vel(self._s)
 
     def Stop(self):
+      """
+      Stop duckie completely
+      """
       self._s.vel_left = 0
       self._s.vel_right = 0
       self.publish_once_in_cmd_vel(self._s)
 
 
     def publish_once_in_cmd_vel(self, cmd):
+        """
+        Publish one msg to duckie's wheels
+        """
         while True:
             connections = self._p.get_num_connections()
             if connections > 0:

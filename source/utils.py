@@ -36,6 +36,9 @@ def ball_grid_detector(frame_shape, circle_center):
             return 9
 
 def ht(img, threshold):
+    """
+    Performs hough transform with specified threshold
+    """
     img = cv2.medianBlur(img,5)
     cimg = cv2.cvtColor(img,cv2.COLOR_GRAY2BGR)
     circles = cv2.HoughCircles(img,cv2.HOUGH_GRADIENT,1,100,
