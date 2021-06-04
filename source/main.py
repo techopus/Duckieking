@@ -95,9 +95,9 @@ class Publisher():
 # Test
 if __name__ == '__main__':
     try:
-        rospy.init_node('our_shitty_duckiequeen', anonymous=True)
+        rospy.init_node('duckiequeen_follow_ball', anonymous=True)
         speed_p = Publisher()
-        bullshit = ImageSub()
+        subscriber = ImageSub()
        # speed_publisher = Publisher()
        # speed_publisher.MoveStraight(0.0,0.0)
 
