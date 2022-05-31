@@ -20,6 +20,8 @@ run the py script as executable. Then directly run `./main.py`.
 
 `utils.py` script contains the algorithm(cht) that we are using for the detection.
 
+P.S. you might also need to have duckietowns_msgs package for ROS message and services definitions in the directory with main.py.
+
 
 
 There are some video demos of the hough transform detection presented as well in the repo as `.MOV` videos (Also link in case: https://drive.google.com/file/d/1tby0ArOWmqUBoEClwud2TsRSJ6CEXYj5/view?ts=629429ac)
